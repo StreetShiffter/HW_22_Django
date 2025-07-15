@@ -3,12 +3,12 @@ from django.http import HttpResponse
 
 
 def home(request):
+    '''Загрузка стартовой страницы'''
     return render(request, 'home.html')
 
-# def contacts(request):
-#     return render(request, 'contacts.html') # ДЛЯ ПРОСТОГО ОТОБРАЖЕНИЯ
 
-def feedback(request):# УНИВЕРСАЛЬНАЯ ФУНКЦИЯ ОТОБРАЖЕНИЯ И ОТПРАВКИ ФОРМЫ
+def feedback(request):
+    '''УНИВЕРСАЛЬНАЯ ФУНКЦИЯ ОТОБРАЖЕНИЯ И ОТПРАВКИ ФОРМЫ'''
     if request.method == 'POST':
         name = request.POST.get('name')
         email = request.POST.get('email')

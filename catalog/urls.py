@@ -5,7 +5,6 @@ from . import views
 app_name = CatalogConfig.name
 
 urlpatterns = [
-    path('', views.home, name='home'),
-    path('home.html', views.home, name='home'),
-    path('contacts.html', views.feedback, name='contacts'),
+    path('', views.home, name='home'), # главная страницая
+    path('contacts/', views.feedback, name="{%url'catalog: contacts/'%}"),  # корректное имя
 ]
