@@ -1,0 +1,32 @@
+[
+{
+    "model": "catalog.products",
+    "fields": {
+        "name": "Iphone 15 PRO",
+        "description": "Смартфон американский",
+        "image": "",
+        "category": 1,
+        "purchase_price": 100000
+    }
+},
+{
+    "model": "catalog.products",
+    "fields": {
+        "name": "Redmi Note 12",
+        "description": "Смартфон китайский",
+        "image": "",
+        "category": 1,
+        "purchase_price": 30000
+    }
+},
+{
+    "model": "catalog.products",
+    "fields": {
+        "name": "Nokia 3310",
+        "description": "Сотовый телефон",
+        "image": "",
+        "category": 1,
+        "purchase_price": 150
+    }
+}
+]
