@@ -1,10 +1,15 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
+from catalog.models import Products, Category
+
 
 def home(request):
     '''Загрузка стартовой страницы'''
-    return render(request, 'home.html')
+    products = Products.objects.all()
+    category = Category.objects.all()
+    context = {'products': products, 'category': category}
+    return render(request, 'home.html', context = context)
 
 
 def feedback(request):
