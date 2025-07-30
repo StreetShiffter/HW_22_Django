@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block title %}Главная{% endblock %}
+{% include 'includes/inc_menu.html' %}
 
 {% block content %}
     <div class="container-fluid p-4">
@@ -9,7 +10,7 @@
         <div class="row">
             {% for product in products %}
                 <!-- Карточка товара -->
-                <div class="col-md-4 mb-4">
+                <div class="col-md-3 mb-4">
                     <div class="card h-100">
                         <!-- Изображение одинакового размера -->
                         {% if product.image %}
@@ -25,8 +26,8 @@
                         <div class="card-body text-center d-flex flex-column">
                             <h5 class="card-title">{{ product.name }}</h5>
                             <h2>{{ product.purchase_price }} руб.</h2>
-                            <p>{{ product.description }}</p>
-                            <button class="btn btn-danger w-100 mt-auto">Купить</button>
+                            <p>{{ product.description|truncatechars:100 }}</p>
+                            <button class="btn btn-danger w-100 mt-auto" onclick="window.location='{% url 'catalog:product' pk=product.pk %}'">Купить</button>
                         </div>
                     </div>
                 </div>
