@@ -9,21 +9,27 @@ from blog.models import BlogPost
 
 class BlogCreateView(CreateView):
     model = BlogPost
-    fields = '__all__'
-    template_name = 'blog/blogpost_form.html'
+    # fields = '__all__' # спец метод для добавления всех полей разом
+    fields = ['title', 'content', 'preview']
     success_url = reverse_lazy('blog:list')
+
+    def form_valid(self, form):
+        form.instance.is_published = True  # ← принудительно публикуем
+        return super().form_valid(form)
 
 
 class BlogUpdateView(UpdateView):
     model = BlogPost
-    template_name = 'blog/blogpost_form.html'
-    fields = ['title', 'content', 'preview', 'is_published']
+    fields = ['title', 'content', 'preview']
     success_url = reverse_lazy('blog:list')
+
+    def form_valid(self, form):
+        form.instance.is_published = True  # ← принудительно публикуем
+        return super().form_valid(form)
 
 
 class BlogDetailView(DetailView):
     model = BlogPost
-    template_name = 'blog/blogpost_detail.html'
     context_object_name = 'post'
 
     def get_object(self, queryset=None):
@@ -35,9 +41,8 @@ class BlogDetailView(DetailView):
 
 class BlogListView(ListView):
     model = BlogPost
-    template_name = 'blog/blogpost_list.html'
     context_object_name = 'posts'
-    paginate_by = 5  # Опционально: пагинация
+    paginate_by = 4  # Опционально: пагинация по 4 элемента
 
     def get_queryset(self):
         # Только опубликованные посты
@@ -46,5 +51,4 @@ class BlogListView(ListView):
 
 class BlogDeleteView(DeleteView):
     model = BlogPost
-    template_name = 'blog/blogpost_confirm_delete.html'
     success_url = reverse_lazy('blog:list')
