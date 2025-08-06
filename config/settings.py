@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'catalog',
+    'blog',
 ]
 
 MIDDLEWARE = [
@@ -67,6 +68,8 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+DATABASE_ROUTERS = ['db_routers.DatabaseRouter']
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -75,6 +78,14 @@ DATABASES = {
         'PASSWORD': os.getenv('DB_PASSWORD'),
         'HOST': os.getenv('DB_HOST'),
         'PORT': os.getenv('DB_PORT'),
+    },
+    'blog': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': os.getenv('DB_NAME2'),
+        'USER': os.getenv('DB_USER2'),
+        'PASSWORD': os.getenv('DB_PASSWORD2'),
+        'HOST': os.getenv('DB_HOST2'),
+        'PORT': os.getenv('DB_PORT2'),
     }
 }
 
