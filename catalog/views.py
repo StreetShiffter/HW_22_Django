@@ -1,38 +1,51 @@
-from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse
+from django.shortcuts import render
+from django.http import HttpResponse, HttpResponseBadRequest
+from django.views.generic import ListView, DetailView
+from django.views import View
+
 
 from catalog.models import Products, Category
 
+class HomeListView(ListView):
+    '''Главная страница'''
+    model = Products
+    context_object_name = 'product'
 
-def home(request):
-    '''Загрузка стартовой страницы'''
-    products = Products.objects.all()
-    category = Category.objects.all()
-    context = {'products': products, 'category': category}
-    return render(request, 'home.html', context = context)
+    def get_context_data(self, **kwargs):
+        '''Метод распаковки моделей'''
+        context = super().get_context_data(**kwargs)
+        context['products'] = Products.objects.all()
+        context['category'] = Category.objects.all()
+        return context
 
-def product(request, pk):
+
+class ProductDetailView(DetailView):
     '''Загрузка страницы с конкретным продуктом по первичному ключу'''
-    # products = Products.objects.get(pk=pk) - простой способ
-    product = get_object_or_404(Products, pk=pk)
-    category = product.category
+    model = Products
+    context_object_name = 'product'
 
-    print(f"Product ID: {product.pk}")
-    print(f"Product name: '{product.name}'")
-    print(f"Name length: {len(product.name)}")
-    print(f"Name repr: {repr(product.name)}")
-
-    context = {'product': product, 'category': category}
-    return render(request, 'product.html', context = context)
+    def get_context_data(self, **kwargs):
+        '''Метод распаковки моделей'''
+        context = super().get_context_data(**kwargs)
+        context['products'] = Products.objects.all()
+        context['category'] = Category.objects.all()
+        return context
 
 
-def feedback(request):
-    '''УНИВЕРСАЛЬНАЯ ФУНКЦИЯ ОТОБРАЖЕНИЯ И ОТПРАВКИ ФОРМЫ'''
-    if request.method == 'POST':
+class FeedbackView(View):
+    template_name = 'catalog/contacts.html'# Нужно прописать genm, т.к. нету действия view.
+
+    def get(self, request):
+        # При GET-запросе просто показываем шаблон
+        return render(request, self.template_name)
+
+    def post(self, request):
+        # При POST — забираем данные вручную
         name = request.POST.get('name')
         email = request.POST.get('email')
         message = request.POST.get('message')
+
+        # Обрабатываем и отвечаем
         return HttpResponse(f"Спасибо, {name}! Ваше сообщение получено.")
-    return render(request, 'contacts.html')
 
 
