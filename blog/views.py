@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
 from django.views import View
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 
 from blog.models import BlogPost
 
@@ -10,12 +10,13 @@ from blog.models import BlogPost
 class BlogCreateView(CreateView):
     model = BlogPost
     # fields = '__all__' # спец метод для добавления всех полей разом
-    fields = ['title', 'content', 'preview']
+    fields = ['title', 'content', 'preview',]
     success_url = reverse_lazy('blog:list')
 
     def form_valid(self, form):
         form.instance.is_published = True  # ← принудительно публикуем
         return super().form_valid(form)
+
 
 
 class BlogUpdateView(UpdateView):
@@ -23,9 +24,8 @@ class BlogUpdateView(UpdateView):
     fields = ['title', 'content', 'preview']
     success_url = reverse_lazy('blog:list')
 
-    def form_valid(self, form):
-        form.instance.is_published = True  # ← принудительно публикуем
-        return super().form_valid(form)
+    def get_success_url(self):
+        return reverse('blog:detail', kwargs={'pk': self.object.pk})
 
 
 class BlogDetailView(DetailView):
