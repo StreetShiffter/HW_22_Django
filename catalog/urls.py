@@ -1,11 +1,11 @@
 from django.urls import path
 from catalog.apps import CatalogConfig
-from . import views
+from .views import HomeListView, ProductDetailView, FeedbackView
 
 app_name = CatalogConfig.name
 
 urlpatterns = [
-    path('', views.home, name="home"), # главная страница
-    path('product/<int:pk>/', views.product, name="product"),
-    path('contacts/', views.feedback, name="contacts"),  # корректное имя
+    path('product/<int:pk>/', ProductDetailView.as_view(), name="product"),
+    path('contacts/',FeedbackView.as_view(), name="contacts"),
+    path('', HomeListView.as_view(), name="home"),
 ]
