@@ -24,21 +24,23 @@ class ProductCreateView(CreateView):
     model = Products
     form_class = ProductsForm
     # fields = '__all__' # спец метод для добавления всех полей разом
-    success_url = reverse_lazy('catalog:products_list')
+
+    def get_success_url(self):
+        return reverse('catalog:product', kwargs={'pk': self.object.pk})
 
 
 class ProductUpdateView(UpdateView):
     model = Products
     form_class = ProductsForm
-    success_url = reverse_lazy('catalog:products_list')
 
     def get_success_url(self):
-        return reverse('catalog:products_detail', kwargs={'pk': self.object.pk})
+        return reverse('catalog:product', kwargs={'pk': self.object.pk})
 
 
 class ProductDeleteView(DeleteView):
     model = Products
-    success_url = reverse_lazy('catalog:products_list')
+    template_name = 'catalog/product_confirm_delete.html'
+    success_url = reverse_lazy('catalog:home')
 
 
 class ProductDetailView(DetailView):
