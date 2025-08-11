@@ -16,6 +16,9 @@
                 <li class="nav-item">
                     <a class="nav-link text-white {% if request.resolver_match.url_name == 'contacts' %}bg-danger{% endif %}" href={% url 'catalog:contacts' %}>Контакты</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white {% if request.resolver_match.url_name == 'create' %}bg-primary{% endif %}" href={% url 'catalog:create' %}>Создать</a>
+                </li>
             </ul>
 
             <div class="mt-auto">
