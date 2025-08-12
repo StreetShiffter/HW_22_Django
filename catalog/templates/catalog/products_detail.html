@@ -24,15 +24,15 @@
   <div class="card-footer d-flex gap-2">
     <button class="btn btn-secondary flex-fill" 
             onclick="window.location='{% url 'catalog:home' %}'">На главную</button>
-    <button class="btn btn-primary flex-fill" 
+    <button class="btn btn-warning flex-fill" 
             onclick="window.location='{% url 'catalog:update' pk=product.pk %}'">
         Редактировать
     </button>
-      <button class="btn btn-warning flex-fill" 
+      <button class="btn btn-danger flex-fill" 
             onclick="window.location='{% url 'catalog:delete' pk=product.pk %}'">
         Удалить
      </button>
-    <button type="button" class="btn btn-danger flex-fill" 
+    <button type="button" class="btn btn-primary flex-fill" 
             data-bs-toggle="tooltip" 
             data-bs-placement="top" 
             data-bs-title="Купить сейчас за {{ product.purchase_price }} руб?">Купить</button>

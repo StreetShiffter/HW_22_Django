@@ -21,6 +21,28 @@ class ProductsForm(forms.ModelForm):
                   'category',
                   'purchase_price',]
 
+    def __init__(self, *args, **kwargs):
+        super(ProductsForm, self).__init__(*args, **kwargs)
+        self.fields['name'].widget.attrs.update({
+            'class': 'form-control',
+            'placeholder': 'Имя товара'})
+
+        self.fields['description'].widget.attrs.update({
+            'class': 'form-control',
+            'placeholder': 'Описание продукта'})
+
+        self.fields['image'].widget.attrs.update({
+            'class': 'form-control',
+            'placeholder': 'Изображение'})
+
+        self.fields['category'].widget.attrs.update({
+            'class': 'form-control',
+            'placeholder': 'Категория товара'})
+
+        self.fields['purchase_price'].widget.attrs.update({
+            'class': 'form-control',
+            'placeholder': 'Цена товара'})
+
     def clean_name(self):
         name = self.cleaned_data.get('name')
         if name:
@@ -36,6 +58,12 @@ class ProductsForm(forms.ModelForm):
                 if word.lower() in description.lower():
                     raise ValidationError(f'Введенное слово "{word}" запрещено для использования в поле описания')
         return description
+
+    def clean_purchase_price(self):
+        price = self.cleaned_data.get('purchase_price')
+        if price < 0:
+               raise ValidationError(f'Введенная цена не может быть отрицательной')
+        return price
 
     def clean_image(self):
         image = self.cleaned_data.get('image')
