@@ -1,9 +1,10 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseBadRequest
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
 from django.views import View
+from django.urls import reverse, reverse_lazy
 
-
+from catalog.forms import ProductsForm
 from catalog.models import Products, Category
 
 class HomeListView(ListView):
@@ -17,6 +18,29 @@ class HomeListView(ListView):
         context['products'] = Products.objects.all()
         context['category'] = Category.objects.all()
         return context
+
+
+class ProductCreateView(CreateView):
+    model = Products
+    form_class = ProductsForm
+    # fields = '__all__' # спец метод для добавления всех полей разом
+
+    def get_success_url(self):
+        return reverse('catalog:product', kwargs={'pk': self.object.pk})
+
+
+class ProductUpdateView(UpdateView):
+    model = Products
+    form_class = ProductsForm
+
+    def get_success_url(self):
+        return reverse('catalog:product', kwargs={'pk': self.object.pk})
+
+
+class ProductDeleteView(DeleteView):
+    model = Products
+    template_name = 'catalog/product_confirm_delete.html'
+    success_url = reverse_lazy('catalog:home')
 
 
 class ProductDetailView(DetailView):
