@@ -134,3 +134,17 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+AUTH_USER_MODEL = 'users.User'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend' #Настройки почты
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = 465
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+EMAIL_HOST_USER = 'your_email@yandex.ru'
+EMAIL_HOST_PASSWORD = 'your_app_password'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+LOGIN_REDIRECT_URL = 'testapp:home'# Редирект после логирования(имя приложения и имя в url )
+LOGOUT_REDIRECT_URL = 'testapp:goodbye'# Редирект после выхода(имя приложения и имя в url )
+LOGIN_URL = 'testapp:login'# Редирект на страницу регистрации, если вьюшка защищена миксином LoginRequiredMixin

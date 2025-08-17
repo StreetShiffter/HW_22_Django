@@ -43,6 +43,9 @@ class ProductsForm(forms.ModelForm):
             'class': 'form-control',
             'placeholder': 'Цена товара'})
 
+        # 🔥 Эта строка меняет "---------" на понятный текст:
+        self.fields['category'].empty_label = "Выберите категорию"
+
     def clean_name(self):
         name = self.cleaned_data.get('name')
         if name:
